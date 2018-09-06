@@ -150,7 +150,6 @@ class RecipeController extends Controller
                 $directions[] = new RecipeDirection($direction);
             }
         }
-
         $recipe->name = $request->name;
         $recipe->description = $request->description;
 
@@ -166,11 +165,8 @@ class RecipeController extends Controller
         $recipe->save();
 
         // delete all ids except updated
-
-        RecipeIngredient::whereNotIn('id', $ingredientsUpdated)->where('recipe_id', $recipe->id)->delete();
-
+        RecipeIngredient::where('id', $ingredientsUpdated)->where('recipe_id', $recipe->id)->delete();
         RecipeDirection::where('id', $directionsUpdated)->where('recipe_id', $recipe->id)->delete();
-
 
         // create new items if exists
 
